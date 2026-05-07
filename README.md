@@ -181,4 +181,5 @@ huggingface_hub
 ## 👥 Team
 
 Group 50 — CS671 Project  
-IIT Kanpur
+IIT Mandi
+
