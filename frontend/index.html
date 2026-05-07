@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain SSL VideoMAE | Deepfake Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for Per-Frame Analysis -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated Vibrant Background -->
+    <div class="vibrant-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-box"></div>
+            <span>VIDEOMAE</span>
+        </div>
+        <div class="nav-links">
+            <a href="#dashboard">ANALYSIS DASHBOARD</a>
+        </div>
+        <a href="#dashboard" class="btn-primary">START SCAN &rarr;</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="status-pill">
+                <span class="pulse"></span> BATCH PROCESSING ACTIVE
+            </div>
+            <h1>DOMAIN<br><span class="text-gradient">INVARIANT</span><br>DETECTION</h1>
+            <p>State-of-the-art Deepfake Detection powered by Multi-View Consistency and MTCNN Spatio-Temporal Attention.</p>
+        </div>
+        <div class="hero-visual">
+            <div class="cube-container">
+                <div class="cube">
+                    <div class="face front">AI</div>
+                    <div class="face back">SEC</div>
+                    <div class="face right">SSL</div>
+                    <div class="face left">MAE</div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deepfake Dashboard -->
+    <section id="dashboard" class="bento-section">
+        <h2>DEEPFAKE DASHBOARD</h2>
+        <div class="dashboard-grid">
+            
+            <!-- Left Column: Upload & Video Player -->
+            <div class="dash-column">
+                <div class="bento-card upload-card">
+                    <div class="card-header">
+                        <span class="index">01</span>
+                        <span class="tag">UPLOAD MANAGER</span>
+                    </div>
+                    <div class="upload-area" id="drop-zone">
+                        <p>CLICK TO UPLOAD VIDEO(S) OR FOLDER</p>
+                        <!-- Added webkitdirectory for folder upload -->
+                        <input type="file" id="video-upload" accept="video/mp4,video/webm" multiple webkitdirectory directory>
+                    </div>
+                    
+                    <div class="queue-container">
+                        <h4>Processing Queue (<span id="queue-count">0</span>)</h4>
+                        <ul id="queue-list" class="queue-list">
+                            <li class="placeholder-text">No videos in queue</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bento-card video-card">
+                    <div class="card-header">
+                        <span class="index">02</span>
+                        <span class="tag">VIDEO PREVIEW</span>
+                    </div>
+                    <div class="video-container">
+                        <video id="video-player" controls>
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Results & Graphs -->
+            <div class="dash-column right-column">
+                
+                <!-- Circular Progress & Stats -->
+                <div class="bento-card stats-card">
+                    <div class="card-header">
+                        <span class="index">03</span>
+                        <span class="tag">PREDICTION REPORT</span>
+                    </div>
+                    <div class="stats-content">
+                        <!-- Circular Progress -->
+                        <div class="progress-section">
+                            <div class="circular-progress" id="progress-circle">
+                                <div class="progress-value">
+                                    <span id="prob-text">0.0%</span>
+                                    <small id="prob-label">AWAITING</small>
+                                </div>
+                            </div>
+                            <p class="prob-desc">Probability of being fake</p>
+                        </div>
+                        
+                        <!-- List Details -->
+                        <div class="details-section">
+                            <div class="status-badge" id="overall-status">
+                                <span class="icon">⬜</span> <span id="status-text">WAITING FOR VIDEO</span>
+                            </div>
+                            
+                            <ul class="stats-list">
+                                <li>
+                                    <span class="list-label">🎭 Fake probability</span>
+                                    <span class="list-value text-fake" id="fake-val">--%</span>
+                                </li>
+                                <li>
+                                    <span class="list-label">✅ Real probability</span>
+                                    <span class="list-value text-real" id="real-val">--%</span>
+                                </li>
+                                <li>
+                                    <span class="list-label">🎞️ Frames analyzed</span>
+                                    <span class="list-value" id="frames-val">--</span>
+                                </li>
+                                <li>
+                                    <span class="list-label">📁 File size</span>
+                                    <span class="list-value" id="size-val">-- MB</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Per-Frame Graph -->
+                <div class="bento-card graph-card">
+                    <div class="card-header">
+                        <span class="index">04</span>
+                        <span class="tag">PER-FRAME DETECTION SCORES</span>
+                    </div>
+                    <p class="graph-subtitle">Higher bar = more likely FAKE for that frame</p>
+                    <div class="chart-container">
+                        <canvas id="suspicionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Heatmap Overlay -->
+                <div class="bento-card heatmap-card">
+                    <div class="card-header">
+                        <span class="index">05</span>
+                        <span class="tag">ATTENTION HEATMAP</span>
+                    </div>
+                    <div class="image-container" id="heatmap-container">
+                        <!-- Heatmap image injected here -->
+                        <p class="placeholder-text" id="heatmap-placeholder">Waiting for analysis...</p>
+                    </div>
+                </div>
+
+                <!-- Human Feedback Card -->
+                <div class="bento-card feedback-card" id="feedback-card" style="display:none;">
+                    <div class="card-header">
+                        <span class="index">06</span>
+                        <span class="tag">WAS THIS CORRECT?</span>
+                    </div>
+                    <p class="graph-subtitle">Help improve the model by verifying predictions</p>
+                    <div class="feedback-buttons">
+                        <button class="btn-feedback correct" id="btn-correct" onclick="submitFeedback(true)">
+                            ✅ YES — Correct
+                        </button>
+                        <button class="btn-feedback wrong" id="btn-wrong" onclick="submitFeedback(false)">
+                            ❌ NO — Wrong
+                        </button>
+                    </div>
+                    <div id="feedback-label-picker" style="display:none; margin-top:16px;">
+                        <p style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:10px;">What was the actual label?</p>
+                        <div class="feedback-buttons">
+                            <button class="btn-feedback real-btn" onclick="confirmFeedback('REAL')">👤 REAL</button>
+                            <button class="btn-feedback fake-btn" onclick="confirmFeedback('FAKE')">🎭 FAKE</button>
+                        </div>
+                    </div>
+                    <div id="feedback-thankyou" style="display:none; text-align:center; padding:12px 0;">
+                        <p style="color:#22c55e; font-size:14px; font-weight:600;">✅ Feedback saved! Model will learn from this.</p>
+                        <p id="feedback-stats-text" style="font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px;"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Overlay Loader -->
+    <div id="loader" class="hidden">
+        <div class="neon-spinner"></div>
+        <p>EXTRACTING FACES & ANALYZING...</p>
+        <p id="loader-filename" style="font-size: 12px; color: #888; margin-top: 10px;"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+torch==2.2.2
+torchvision==0.17.2
+tqdm
+opencv-python-headless
+transformers==4.38.2
+matplotlib
+seaborn
+scikit-learn
+fastapi
+uvicorn[standard]
+python-multipart
+facenet-pytorch
+Pillow
+numpy<2
