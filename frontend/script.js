@@ -114,8 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateDashboard(data, filename) {
-        const fakeThresh    = data.threshold_used    || 0.55;
-        const suspectThresh = data.suspect_threshold || 0.38;
+        const fakeThresh    = data.threshold_used    || 0.45;
+        const suspectThresh = data.suspect_threshold || 0.30;
         const fakePct       = (data.fake_prob * 100).toFixed(1);
         const realPct       = (data.real_prob * 100).toFixed(1);
 
@@ -252,7 +252,7 @@ async function confirmFeedback(actualLabel, isCorrect = false) {
     const filename = window._currentFilename;
     if (!lastResult) return;
 
-    const threshold = lastResult.threshold_used || 0.35;
+    const threshold = lastResult.threshold_used || 0.45;
     const modelPrediction = lastResult.fake_prob > threshold ? 'FAKE' : 'REAL';
     const trueLabel = isCorrect ? modelPrediction : actualLabel;
 
