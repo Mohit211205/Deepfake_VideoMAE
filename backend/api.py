@@ -24,8 +24,8 @@ from facenet_pytorch import MTCNN
 from src.models.videomae import VideoMAEClassifier
 
 FEEDBACK_LOG     = "feedback_log.json"
-FAKE_THRESHOLD   = 0.55   # Must cross this to be called FAKE (reduced false positives)
-SUSPECT_THRESHOLD = 0.38  # Between SUSPECT and FAKE = "SUSPICIOUS" zone
+FAKE_THRESHOLD   = 0.45   # Must cross this to be called FAKE (reduced false positives)
+SUSPECT_THRESHOLD = 0.30  # Between SUSPECT and FAKE = "SUSPICIOUS" zone
 
 app = FastAPI()
 
@@ -264,8 +264,8 @@ def process_video_and_predict(video_bytes):
     file_size_mb = round(len(video_bytes) / (1024 * 1024), 2)
 
     return {
-        "real_prob":        1.0 - fake_prob,
-        "fake_prob":        fake_prob,
+        "real_prob":        1.0 - boosted_fake_prob,
+        "fake_prob":        boosted_fake_prob,
         "overlay_b64":      overlay_b64,
         "frame_scores":     frame_scores.tolist(),
         "frames_analyzed":  total_frames,
